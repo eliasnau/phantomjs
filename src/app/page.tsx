@@ -5,6 +5,7 @@ import RoadmapSection from "@/components/roadmap";
 import { Comparison } from "@/components/comparison";
 import { FAQ } from "@/components/faq";
 import GettingStartedSection from "@/components/getting-started";
+import { InteractiveFeatureExplorer } from "@/components/interactive-explorer";
 
 export async function generateMetadata() {
   return {
@@ -94,6 +95,7 @@ const Index = () => {
       <Pricing tiers={pricingTiers} />
       <Comparison items={comparisonItems} />
       <RoadmapSection />
+      <InteractiveFeatureExplorer />
       <GettingStartedSection />
       <FAQ items={faqItems} />
     </div>
