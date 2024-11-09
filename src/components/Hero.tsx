@@ -1,39 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Github, Origami, Twitter } from "lucide-react";
+import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Component() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="container mx-auto px-4 py-4">
-        <nav className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <Origami className="h-6 w-6" />
-            <span className="font-semibold">Phantom Starter</span>
-          </Link>
-          <div className="flex items-center space-x-4">
-            <Link
-              href="https://github.com/eliasnau/phantom-starter"
-              className="text-foreground hover:text-foreground/80"
-            >
-              <Github className="h-5 w-5" />
-            </Link>
-            <Link
-              href="https://twitter.com/elias_nau"
-              className="text-foreground hover:text-foreground/80"
-            >
-              <Twitter className="h-5 w-5" />
-            </Link>
-            <Button
-              variant="default"
-              className="bg-primary text-white hover:bg-primary/90"
-            >
-              Documentation
-            </Button>
-          </div>
-        </nav>
-      </header>
+    <div className="bg-background min-h-screen">
       <main className="container mx-auto px-4 py-16 text-center">
         <div className="mb-8">
           <Link href="https://github.com/eliasnau" target="_blank">
@@ -54,6 +26,12 @@ export default function Component() {
           Production-ready foundation featuring enterprise-grade authentication,
           authorization, and scalability. Built with TypeScript and modern best
           practices for secure, scalable Node.js applications.
+          <br />
+          <span className="text-red-500 text-sm">
+            Temporarly free for commercial use. Does only include the current
+            version on GitHub until payment method is set up and all the bugs
+            are fixed
+          </span>
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link href="/docs">

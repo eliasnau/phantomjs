@@ -24,11 +24,10 @@ interface PricingTier {
 }
 
 const comparisonItems = [
-  { feature: "JWT Authentication", phantom: true, others: false },
-  { feature: "Multi-factor Auth", phantom: true, others: false },
-  { feature: "Role-based Access Control", phantom: true, others: true },
-  { feature: "GraphQL Integration", phantom: true, others: false },
-  { feature: "Serverless Deployment", phantom: true, others: false },
+  { feature: "in_development", phantom: true, others: false },
+  { feature: "in_development", phantom: true, others: true },
+  { feature: "in_development", phantom: true, others: false },
+  { feature: "in_development", phantom: true, others: true },
 ];
 
 const pricingTiers: PricingTier[] = [
@@ -36,7 +35,11 @@ const pricingTiers: PricingTier[] = [
     name: "Community",
     price: "Free",
     description: "Free and Open Source for non-commercial use",
-    features: ["All features", "Community support"],
+    features: [
+      "All features",
+      "Community support",
+      "Temporarly free for commercial use. Does only include the current version on GitHub.",
+    ],
     negativeFeatures: ["Commercial license", "Priority support"],
   },
   {
