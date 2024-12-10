@@ -26,12 +26,6 @@ export default function Component() {
           Production-ready foundation featuring enterprise-grade authentication,
           authorization, and scalability. Built with TypeScript and modern best
           practices for secure, scalable Node.js applications.
-          <br />
-          <span className="text-red-500 text-sm">
-            Temporarly free for commercial use. Does only include the current
-            version on GitHub until payment method is set up and all the bugs
-            are fixed
-          </span>
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link href="/docs">
