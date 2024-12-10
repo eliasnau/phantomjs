@@ -80,7 +80,7 @@ export function InteractiveFeatureExplorer() {
           Interactive Feature Explorer
         </CardTitle>
         <CardDescription>
-          Experience Phantom Starter's key features firsthand
+          Experience Phantom Starter&apos;s key features firsthand
         </CardDescription>
       </CardHeader>
       <CardContent>
