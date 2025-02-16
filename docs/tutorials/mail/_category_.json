@@ -1,8 +1,0 @@
-{
-  "label": "Emails",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "This will contain all you need to manahe emails in your App"
-  }
-}
