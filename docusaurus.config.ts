@@ -6,15 +6,11 @@ const config: Config = {
   title: "Starter Kit",
   tagline: "The best starter kit for your Next.js App",
   favicon: "img/favicon.ico",
-  organizationName: "eliasnau",
-  projectName: "phantomjs",
-  deploymentBranch: "main",
+  organizationName: "eliasnau", // GitHub username
+  projectName: "phantomjs", // repo name
+  deploymentBranch: "gh-pages",
   trailingSlash: false,
-
-  // Set the production url ofyour site here
   url: "https://phantom.js.org",
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
 
   onBrokenLinks: "warn",
