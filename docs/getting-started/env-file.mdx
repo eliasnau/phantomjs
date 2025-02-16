@@ -1,0 +1,135 @@
+---
+sidebar_position: 2
+---
+
+# Environment Variables
+
+Start by copying the example environment file to create your local configuration:
+
+```bash
+cp .env.example .env.local
+```
+
+Your `.env.local` file should contain the following variables:
+
+```properties
+#=================================#
+#           GENERAL               #
+#=================================#
+# The public URL where your app is hosted
+NEXT_PUBLIC_APP_URL=localhost:3000
+
+#=================================#
+#           DATABASE              #
+#=================================#
+# PostgreSQL connection string for Drizzle ORM
+DATABASE_URL="postgresql://postgres:password@localhost:5432/starter-kit"
+
+#=================================#
+#            AUTH                 #
+#=================================#
+# Generate using: openssl rand -base64 32
+# or https://generate-secret.vercel.app/32
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=http://localhost:3000
+
+# GitHub OAuth
+# Get these from https://github.com/settings/developers
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+#=================================#
+#            EMAIL                #
+#=================================#
+# SMTP Configuration for sending emails
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your_username
+SMTP_PASSWORD=your_password
+SMTP_FROM=noreply@yourdomain.com
+```
+
+## Configuration Guide
+
+### General Settings
+- `NEXT_PUBLIC_APP_URL`: Your application's public URL. Use `localhost:3000` for local development.
+
+### Database Configuration
+- `DATABASE_URL`: Your PostgreSQL connection string. Format: `postgresql://[user]:[password]@[host]:[port]/[db_name]`
+
+### Authentication Settings
+- `BETTER_AUTH_SECRET`: A secure random string for authentication. Generate using provided methods.
+- `BETTER_AUTH_URL`: Authentication callback URL. Should match your deployment URL.
+- GitHub OAuth credentials from [GitHub Developer Settings](https://github.com/settings/developers)
+
+### Email Configuration
+- SMTP settings for your email provider
+- All fields are required for email functionality
+- `SMTP_SECURE`: Set to `true` for port 465, `false` for other ports
+
+## Adding Custom Environment Variables
+
+When adding new environment variables, you need to declare them in `src/env.js` to ensure type safety and validation:
+
+```typescript
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
+
+export const env = createEnv({
+    server: {
+        // Server-side variables (not exposed to the browser)
+        MY_SECRET_KEY: z.string().min(1),
+        API_TOKEN: z.string().min(1),
+    },
+    client: {
+        // Client-side variables (exposed to the browser)
+        // Must be prefixed with NEXT_PUBLIC_
+        NEXT_PUBLIC_FEATURE_FLAG: z.string().default("false"),
+    },
+    // Runtime validation
+    runtimeEnv: {
+        MY_SECRET_KEY: process.env.MY_SECRET_KEY,
+        API_TOKEN: process.env.API_TOKEN,
+        NEXT_PUBLIC_FEATURE_FLAG: process.env.NEXT_PUBLIC_FEATURE_FLAG,
+    },
+});
+```
+
+### Variable Types
+
+1. **Server-side Variables**
+   - Not exposed to the browser
+   - Added to the `server` object
+   - Can include sensitive information
+
+2. **Client-side Variables**
+   - Exposed to the browser
+   - Must be prefixed with `NEXT_PUBLIC_`
+   - Added to the `client` object
+   - Should not contain sensitive information
+
+### Validation Rules
+
+Use Zod schemas to validate your variables:
+- `z.string()` - String validation
+- `z.number()` - Number validation
+- `z.boolean()` - Boolean validation
+- `z.enum()` - Enumerated values
+- Add `.min()`, `.max()`, `.email()`, etc. for additional validation
+
+Example:
+```typescript
+server: {
+    PORT: z.number().min(1000).max(9999),
+    EMAIL: z.string().email(),
+    MODE: z.enum(["development", "production"]),
+}
+```
+
+:::warning
+After adding new variables to `env.js`, remember to:
+1. Add them to your `.env.example` file
+2. Update your `.env.local` file
+3. Never commit sensitive values to version control
+:::

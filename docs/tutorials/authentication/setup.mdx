@@ -1,0 +1,58 @@
+---
+sidebar_position: 3
+---
+
+# Authentication Setup
+
+This starter kit uses [Better-Auth](https://better-auth.dev) for authentication. For advanced configurations and additional features, refer to the [Better-Auth documentation](https://better-auth.dev/docs).
+
+## Environment Variables
+
+The following variables need to be configured in your `.env.local` file for authentication:
+
+### General Settings
+- `NEXT_PUBLIC_APP_URL`: Your application's public URL
+  - Development: `localhost:3000`
+  - Production: `https://your-domain.com`
+  - Used for callbacks and public-facing URLs
+
+### Authentication Settings
+- `BETTER_AUTH_SECRET`: Secret key for encrypting sessions and tokens
+  - Generate using:
+    1. [Online Generator](https://generate-secret.vercel.app/32)
+    2. Terminal: `openssl rand -base64 32`
+  - ⚠️ Must be changed in production
+  - Keep this value private and never commit it
+
+- `BETTER_AUTH_URL`: Base URL for authentication callbacks
+  - Development: `http://localhost:3000`
+  - Production: `https://your-domain.com`
+  - Must include protocol (http/https)
+
+### OAuth Settings (Optional)
+- `GITHUB_CLIENT_ID`: Your GitHub OAuth app client ID
+- `GITHUB_CLIENT_SECRET`: Your GitHub OAuth app secret
+  - Both obtained from [GitHub Developer Settings](https://github.com/settings/developers)
+  - Required only if using GitHub authentication
+
+### Email Settings (Optional)
+- `SMTP_HOST`: Your SMTP server hostname
+- `SMTP_PORT`: SMTP port (usually 587 or 465)
+- `SMTP_SECURE`: Use TLS (true for 465, false for other ports)
+- `SMTP_USER`: SMTP account username
+- `SMTP_PASSWORD`: SMTP account password
+- `SMTP_FROM`: Sender email address
+  - Required only for email/password authentication
+  - Used for verification and password reset emails
+
+:::danger Important
+Never commit sensitive credentials to version control. Use `.env.local` for your secrets.
+:::
+
+## Next Steps
+
+After configuring your environment variables, proceed to:
+- [OAuth Providers](./oauth-providers) - Social login setup
+- [Password Authentication](./password-auth) - Email/password setup
+- [Email Configuration](./email-configuration) - Email templates and verification
+

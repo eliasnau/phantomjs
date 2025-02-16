@@ -1,0 +1,43 @@
+---
+sidebar_position: 6
+---
+
+# Two-Factor Authentication
+
+:::warning Development Status
+Two-Factor Authentication (2FA) support is currently in development and will be available in a future release.
+:::
+
+## Planned Features
+
+The upcoming 2FA implementation will include:
+- Time-based One-Time Password (TOTP) support
+- QR code generation for easy setup
+- Backup codes generation
+- Multiple authenticator app support
+- Recovery options
+
+## Current Status
+
+While 2FA is being developed, you can enhance your application's security by:
+- Enabling email verification
+- Implementing strong password requirements
+- Setting appropriate rate limits
+- Using secure session management
+
+## Future Implementation
+
+The 2FA system will be integrated into the existing authentication flow in `src/lib/auth.ts`:
+
+```typescript
+export const auth = betterAuth({
+    twoFactor: {
+        enabled: true,
+        // Additional 2FA configuration options will be available here
+    }
+});
+```
+
+:::info Stay Updated
+Follow our [GitHub repository](https://github.com/eliasnau/starter-kit) for updates on 2FA implementation and other security features.
+:::

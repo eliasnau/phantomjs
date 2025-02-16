@@ -1,0 +1,101 @@
+---
+sidebar_position: 4
+---
+
+# Final Steps
+
+## Database Setup (Optional)
+
+<details>
+<summary>If you need to set up a local PostgreSQL database</summary>
+
+You can start a PostgreSQL database using the provided script:
+
+```bash
+./start-database.sh
+```
+
+This will create a Docker container with PostgreSQL installed and configured according to your environment variables.
+</details>
+
+## Populate your database
+
+Push the database schema to your PostgreSQL instance:
+
+<Tabs>
+<TabItem value="pnpm">
+
+```bash
+pnpm db:push
+```
+
+</TabItem>
+<TabItem value="npm">
+
+```bash
+npm run db:push
+```
+
+</TabItem>
+<TabItem value="yarn">
+
+```bash
+yarn db:push
+```
+
+</TabItem>
+</Tabs>
+
+## Start the local server
+
+Start your development server:
+
+<Tabs>
+<TabItem value="pnpm">
+
+```bash
+pnpm dev
+```
+
+</TabItem>
+<TabItem value="npm">
+
+```bash
+npm run dev
+```
+
+</TabItem>
+<TabItem value="yarn">
+
+```bash
+yarn dev
+```
+
+</TabItem>
+</Tabs>
+
+The command should output something like this:
+
+```plaintext
+  ▲ Next.js 15.0.1
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+  ✓ Starting...
+  ✓ Ready in 2.4s
+```
+
+If you see this output, you can CTRL + Click on http://localhost:3000 or manually open it in your browser.
+
+## That's it! 🎉
+
+Congratulations! You've successfully set up the project locally. You can now start customizing the application and building your product!
+
+:::warning
+If you encounter any errors during this process, please:
+1. Verify your environment variables are correctly set
+2. Ensure all dependencies are installed
+3. Check your database connection (if using a database)
+
+For additional help, feel free to open an issue in the repository.
+:::

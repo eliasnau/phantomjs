@@ -1,0 +1,237 @@
+---
+sidebar_position: 7
+---
+
+# Session Management
+
+This guide explains how to work with authentication sessions in your application, both on the client and server side.
+
+## Client-Side Sessions
+
+### Getting Session Data
+
+There are multiple ways to access the session on the client side:
+
+#### 1. React Hook
+
+```typescript
+import { useSession } from "better-auth/react";
+
+function MyComponent() {
+    const session = useSession();
+
+    if (!session) {
+        return <div>Not authenticated</div>;
+    }
+
+    return <div>Welcome, {session.user.name}</div>;
+}
+```
+
+#### 2. Direct Session Access
+
+```typescript
+import { getSession } from "better-auth/client";
+
+async function checkSession() {
+    const session = await getSession();
+    
+    if (session) {
+        // Access session data
+        const { user, expires } = session;
+    }
+}
+```
+
+### Session Updates
+
+Listen for session changes in your components:
+
+```typescript
+import { useSessionUpdate } from "better-auth/react";
+
+function SessionListener() {
+    useSessionUpdate((newSession) => {
+        if (newSession) {
+            // Session created or updated
+        } else {
+            // Session expired or user signed out
+        }
+    });
+}
+```
+
+## Server-Side Sessions
+
+### Middleware Protection
+
+Protect your API routes in `src/middleware.ts`:
+
+```typescript
+import { withAuth } from "better-auth/middleware";
+
+export default withAuth({
+    // Paths that require authentication
+    protected: ["/api/protected/:path*"],
+    // Public paths
+    public: ["/api/public/:path*"],
+});
+```
+
+### Route Handlers
+
+Access session in your API routes:
+
+```typescript
+import { getServerSession } from "better-auth/next";
+
+// Server Component
+async function ProtectedComponent() {
+    const session = await getServerSession();
+    
+    if (!session) {
+        redirect("/login");
+    }
+    
+    return <div>Protected Content for {session.user.email}</div>;
+}
+
+// API Route
+export async function GET(request: Request) {
+    const session = await getServerSession();
+    
+    if (!session) {
+        return new Response("Unauthorized", { status: 401 });
+    }
+    
+    // Access session data
+    const { user, expires } = session;
+}
+```
+
+### Server Actions
+
+Use sessions in server actions:
+
+```typescript
+"use server";
+
+import { getServerSession } from "better-auth/next";
+
+export async function protectedAction() {
+    const session = await getServerSession();
+    
+    if (!session) {
+        throw new Error("Unauthorized");
+    }
+    
+    // Perform authenticated action
+    return { userId: session.user.id };
+}
+```
+
+## Advanced Usage
+
+### Custom Session Validation
+
+```typescript
+import { validateSession } from "better-auth/server";
+
+async function customSessionCheck() {
+    const result = await validateSession({
+        requireVerified: true,
+        allowExpired: false,
+    });
+    
+    return result.valid;
+}
+```
+
+### Session Management
+
+```typescript
+import { authClient } from "better-auth/client";
+
+// Sign out from current device
+async function signOut() {
+    await authClient.signOut();
+}
+
+// Sign out from all devices
+async function signOutAll() {
+    await authClient.signOutAll();
+}
+
+// Refresh session
+async function refreshSession() {
+    await authClient.refreshSession();
+}
+```
+
+### Type Safety
+
+Use TypeScript types for session data:
+
+```typescript
+import type { Session, User } from "better-auth/types";
+
+// Custom user type
+interface CustomUser extends User {
+    role: string;
+    preferences: {
+        theme: 'light' | 'dark';
+    };
+}
+
+// Use with hooks
+const session = useSession<CustomUser>();
+```
+
+## Security Considerations
+
+### Session Configuration
+
+Configure session behavior in `src/lib/auth.ts`:
+
+```typescript
+export const auth = betterAuth({
+    session: {
+        strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        updateAge: 24 * 60 * 60, // 24 hours
+        rememberMe: true,
+    },
+    security: {
+        csrfProtection: true,
+        requireSecureCookie: process.env.NODE_ENV === "production",
+    }
+});
+```
+
+### Error Handling
+
+```typescript
+try {
+    const session = await getServerSession();
+} catch (error) {
+    if (error.code === "SESSION_EXPIRED") {
+        // Handle expired session
+    } else if (error.code === "INVALID_TOKEN") {
+        // Handle invalid session token
+    }
+}
+```
+
+:::tip Best Practices
+- Always verify sessions on sensitive operations
+- Use appropriate session timeouts
+- Implement proper error handling
+- Consider implementing session refresh strategies
+:::
+
+:::warning Security Note
+- Never store sensitive information in the session
+- Always validate sessions server-side
+- Use HTTPS in production
+- Implement proper CSRF protection
+:::
