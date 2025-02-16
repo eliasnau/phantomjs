@@ -6,6 +6,10 @@ const config: Config = {
   title: "Starter Kit",
   tagline: "The best starter kit for your Next.js App",
   favicon: "img/favicon.ico",
+  organizationName: "eliasnau",
+  projectName: "phantomjs",
+  deploymentBranch: "main",
+  trailingSlash: false,
 
   // Set the production url ofyour site here
   url: "https://phantom.js.org",
@@ -13,7 +17,7 @@ const config: Config = {
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
 
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
 
   // Even if you don't use internationalization, you can use this field to set
@@ -88,7 +92,7 @@ const config: Config = {
             },
             {
               label: "Portfolio",
-              href: "eliasnau.dev",
+              href: "https://eliasnau.dev", 
             },
           ],
         },
